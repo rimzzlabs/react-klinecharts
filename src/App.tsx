@@ -63,9 +63,15 @@ function App() {
       return;
     }
 
+    let shouldUpdate = Boolean(Math.floor(Math.random() * 2));
+    if (!shouldUpdate) return;
+
+    let newLow = +sortedPrices[0].toFixed(2);
+    let newHigh = +sortedPrices[3].toFixed(2);
+
     let open = lastBar.open;
-    let high = +sortedPrices[3].toFixed(2);
-    let low = +sortedPrices[0].toFixed(2);
+    let high = lastBar.high < newHigh ? newHigh : lastBar.high;
+    let low = lastBar.low > newLow ? newLow : lastBar.low;
     let close = +sortedPrices[Math.round(Math.random() * 3)].toFixed(2);
     let volume = (lastBar.volume ?? 0) + 0.5;
     let turnover = ((open + high + low + close) / 4) * volume;
